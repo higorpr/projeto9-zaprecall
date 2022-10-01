@@ -3,9 +3,23 @@ import styled from "styled-components";
 import arrow from "../assets/img/seta_play.png";
 import circularArrow from "../assets/img/seta_virar.png";
 
-function Button({ entry, idx }) {
-    const [nClicks, setNClicks] = useState(0);
+function Main({ entries, nClicks, setNClicks }) {
+    return (
+        <>
+            {entries.map((entry, idx) => (
+                <Button
+                    key={idx}
+                    entry={entry}
+                    idx={idx}
+                    nClicks={nClicks}
+                    setNClicks={setNClicks}
+                />
+            ))}
+        </>
+    );
+}
 
+function Button({ entry, idx, nClicks, setNClicks }) {
     let height;
     let color;
     let fontWeight;
@@ -17,7 +31,7 @@ function Button({ entry, idx }) {
     let icon;
     let text;
 
-    if (nClicks === 0) {
+    if (nClicks[idx] === 0) {
         height = "65px";
         color = "#ffffff";
         fontWeight = "700";
@@ -37,13 +51,19 @@ function Button({ entry, idx }) {
         positionButton = "relative";
         positionImage = "absolute";
         textAlign = "start";
-        if (nClicks === 1) {
+        if (nClicks[idx] === 1) {
             icon = circularArrow;
             text = entry.question;
         } else {
             icon = null;
             text = entry.answer;
         }
+    }
+
+    function updateClicks(index) {
+        const arr = [...nClicks];
+        arr[index] = arr[index] + 1;
+        setNClicks(arr);
     }
 
     return (
@@ -59,25 +79,11 @@ function Button({ entry, idx }) {
         >
             <p>{text}</p>
             {icon ? (
-                <img
-                    src={icon}
-                    alt="icon"
-                    onClick={() => setNClicks(nClicks + 1)}
-                />
+                <img src={icon} alt="icon" onClick={() => updateClicks(idx)} />
             ) : (
                 ""
             )}
         </QuestionButtion>
-    );
-}
-
-function Main({ entries }) {
-    return (
-        <>
-            {entries.map((entry, idx) => (
-                <Button key={idx} entry={entry} idx={idx} />
-            ))}
-        </>
     );
 }
 

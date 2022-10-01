@@ -1,15 +1,41 @@
 import styled from "styled-components";
 
-function Button() {
-    return (
-        <ButtonContainer>
-            
-        </ButtonContainer>
-    )
+function Button(props) {
+    console.log(props.children);
+    const {
+        order
+    } = props
+
+    let color;
+
+    if (order === 1) {
+        color = "#FF3030";
+    } else if (order === 2) {
+        color = "#FF922E";
+    } else {
+        color = "#2FBE34"
+    }
+    return <FooterButton color={color}>{props.children}</FooterButton>;
 }
 
-function Footer() {
-    return <FooterContainer>TESTE PÉ</FooterContainer>;
+function Footer({ nClicks, setNClicks }) {
+    return (
+        <FooterContainer>
+            <ButtonContainer>
+                <Button order={1} >
+                    <p>Não lembrei</p>
+                </Button>
+                <Button order={2}>
+                    <p>Quase não lembrei</p>
+                </Button>
+                <Button order={3}>
+                    <p>
+                        Zap!
+                    </p>
+                </Button>
+            </ButtonContainer>
+        </FooterContainer>
+    );
 }
 
 export default Footer;
@@ -33,9 +59,30 @@ const FooterContainer = styled.div`
     padding: 10px;
 `;
 
-const ButtonContainer = styled.div``;
+const ButtonContainer = styled.div`
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin: 20px;
+`;
 
-const FooterButton = styled.button``;
+const FooterButton = styled.button`
+    width: 90px;
+    font-family: "Recursive";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    background: ${props => props.color};
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+`;
 
 // .footer-concluidos {
 //   width: 100%;

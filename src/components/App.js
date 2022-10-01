@@ -7,24 +7,34 @@ import FrontPage from "./FrontPage";
 import deckReact from "../decks/deckReact";
 import { useState } from "react";
 
-function MainApp() {
-    return (
-        <>
-            <Header />
-            <Main entries={deckReact} />
-            <Footer />
-        </>
-    );
-}
-
 function App() {
     const [began, setBegan] = useState(false);
+    const [nClicks, setNClicks] = useState(new Array(deckReact.length).fill(0));
+
     return (
         <>
             <GlobalStyle />
             <ScreenContainer>
-                {began === false ? <FrontPage setBegan={setBegan}/> : <MainApp />}
+                {began === false ? (
+                    <FrontPage setBegan={setBegan} />
+                ) : (
+                    <MainApp
+                        entries={deckReact}
+                        nClicks={nClicks}
+                        setNClicks={setNClicks}
+                    />
+                )}
             </ScreenContainer>
+        </>
+    );
+}
+
+function MainApp({ entries, nClicks, setNClicks }) {
+    return (
+        <>
+            <Header />
+            <Main entries={entries} nClicks={nClicks} setNClicks={setNClicks} />
+            <Footer nClicks={nClicks} setNClicks={setNClicks} />
         </>
     );
 }
