@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import deckReact from "../decks/deckReact";
 import arrow from "../assets/img/seta_play.png";
 import circularArrow from "../assets/img/seta_virar.png";
 
@@ -26,10 +25,9 @@ function Button({ entry, idx }) {
         lineHeight = "19px";
         positionButton = "";
         positionImage = "";
-        textAlign = 'center';
+        textAlign = "center";
         icon = arrow;
         text = `Pergunta ${idx + 1}`;
-        
     } else {
         height = "100px";
         color = "#ffffd5";
@@ -37,8 +35,8 @@ function Button({ entry, idx }) {
         fontSize = "18px";
         lineHeight = "22px";
         positionButton = "relative";
-        positionImage = 'absolute';
-        textAlign = 'start';
+        positionImage = "absolute";
+        textAlign = "start";
         if (nClicks === 1) {
             icon = circularArrow;
             text = entry.question;
@@ -58,18 +56,25 @@ function Button({ entry, idx }) {
             positionButton={positionButton}
             positionImage={positionImage}
             textAlign={textAlign}
-            >
+        >
             <p>{text}</p>
-            {icon ? (<img src={icon} alt="icon" onClick={() => setNClicks(nClicks + 1)} />) : ''}
+            {icon ? (
+                <img
+                    src={icon}
+                    alt="icon"
+                    onClick={() => setNClicks(nClicks + 1)}
+                />
+            ) : (
+                ""
+            )}
         </QuestionButtion>
     );
 }
 
-function Main() {
-    
+function Main({ entries }) {
     return (
         <>
-            {deckReact.map((entry, idx) => (
+            {entries.map((entry, idx) => (
                 <Button key={idx} entry={entry} idx={idx} />
             ))}
         </>
@@ -80,34 +85,34 @@ export default Main;
 
 const QuestionButtion = styled.button`
     width: 300px;
-    min-height: ${props => props.height};
-    background-color: ${props => props.color};
+    min-height: ${(props) => props.height};
+    background-color: ${(props) => props.color};
     margin: 12px;
     padding: 15px;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
     display: flex;
-    align-items: ${props => props.textAlign};
+    align-items: ${(props) => props.textAlign};
     justify-content: space-between;
-    position: ${props => props.positionButton};
+    position: ${(props) => props.positionButton};
 
     p {
         font-family: "Recursive";
         font-style: normal;
-        font-weight: ${props => props.fontWeight};
-        font-size: ${props => props.fontSize};
-        line-height: ${props => props.lineHeight};
+        font-weight: ${(props) => props.fontWeight};
+        font-size: ${(props) => props.fontSize};
+        line-height: ${(props) => props.lineHeight};
         color: #333333;
         text-align: left;
     }
 
     img {
-        position: ${props => props.positionImage};
+        position: ${(props) => props.positionImage};
         bottom: 10px;
         right: 10px;
     }
 
-    img:hover{
+    img:hover {
         cursor: pointer;
     }
 `;

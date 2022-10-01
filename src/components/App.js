@@ -3,15 +3,27 @@ import GlobalStyle from "../theme/globalStyles";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import FrontPage from "./FrontPage";
+import deckReact from "../decks/deckReact";
+import { useState } from "react";
+
+function MainApp() {
+    return (
+        <>
+            <Header />
+            <Main entries={deckReact} />
+            <Footer />
+        </>
+    );
+}
 
 function App() {
+    const [began, setBegan] = useState(false);
     return (
         <>
             <GlobalStyle />
             <ScreenContainer>
-                <Header />
-                <Main />
-                <Footer />
+                {began === false ? <FrontPage setBegan={setBegan}/> : <MainApp />}
             </ScreenContainer>
         </>
     );
