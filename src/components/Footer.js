@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 function Footer({ nClicks, setNClicks, grades, setGrades, current }) {
+    let concluded = 0;
+    for (let grade of grades) {
+        if (grade !== 0) {
+            concluded += 1;
+        }
+    }
     return (
         <FooterContainer>
             <ButtonContainer>
@@ -35,6 +41,7 @@ function Footer({ nClicks, setNClicks, grades, setGrades, current }) {
                     <p>Zap!</p>
                 </Button>
             </ButtonContainer>
+            {concluded}/{grades.length} Concluídos
         </FooterContainer>
     );
 }
