@@ -97,10 +97,12 @@ function Button({
     }
 
     function updateClicks() {
-        const arr = [...nClicks];
-        arr[idx] += 1;
-        setNClicks(arr);
-        setCurrent(idx);
+        if (grades[idx] === 0) {
+            const arr = [...nClicks];
+            arr[idx] += 1;
+            setNClicks(arr);
+            setCurrent(idx);
+        }
     }
 
     return (

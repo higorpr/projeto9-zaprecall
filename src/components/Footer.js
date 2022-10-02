@@ -45,8 +45,7 @@ function Button(props) {
     
 
     function defineGrade(grade) {
-        console.log({ grade, nClicks });
-        if (nClicks[current] === 1) {
+        if (nClicks[current] === 1  || nClicks[current] === 2) {
             let arrClick = [...nClicks];
             arrClick[current] = 0;
             setNClicks(arrClick);
