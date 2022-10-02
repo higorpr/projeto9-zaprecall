@@ -2,6 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import arrow from "../assets/img/seta_play.png";
 import circularArrow from "../assets/img/seta_virar.png";
+import iconRight from '../assets/img/icone_certo.png'
+import iconAlmost from '../assets/img/icone_quase.png'
+import iconWrong from '../assets/img/icone_erro.png'
 
 function Main({ entries, nClicks, setNClicks, current, setCurrent, grades }) {
     return (
@@ -44,6 +47,8 @@ function Button({
     let border;
     let textDecoration;
     let textColor;
+    let pDataIdentifier; 
+    let iconIdentifier;
 
     if (nClicks[idx] === 0) {
         height = "65px";
@@ -56,6 +61,8 @@ function Button({
         textAlign = "center";
         icon = arrow;
         text = `Pergunta ${idx + 1}`;
+        pDataIdentifier = "flashcard-index-item";
+        iconIdentifier = "flashcard-show-btn"
     } else {
         height = "100px";
         color = "#ffffd5";
@@ -68,22 +75,29 @@ function Button({
         if (nClicks[idx] === 1) {
             icon = circularArrow;
             text = entry.question;
+            pDataIdentifier = "flashcard-question";
+            iconIdentifier = "flashcard-turn-btn"
         } else {
             icon = null;
             text = entry.answer;
+            pDataIdentifier = "flashcard-answer";
         }
     }
 
     if (grades[idx] !== 0) {
+        iconIdentifier = "flashcard-status"
         if (grades[idx] === 3) {
             textColor = "#2FBE34";
             textDecoration = "line-through";
+            icon = iconRight;
         } else if (grades[idx] === 2) {
             textColor = "#ff922e";
             textDecoration = "line-through";
+            icon = iconAlmost;
         } else {
             textColor = "#ff3030";
             textDecoration = "line-through";
+            icon = iconWrong;
         }
     } else {
         textDecoration = "";
@@ -119,16 +133,19 @@ function Button({
             textDecoration={textDecoration}
             textColor={textColor}
             onClick={() => setCurrent(idx)}
+            data-identifier='flashcard'
         >
-            <p>{text}</p>
+            <p data-identifier={pDataIdentifier}>{text}</p>
             {icon ? (
-                <img src={icon} alt="icon" onClick={() => updateClicks()} />
+                <img src={icon} alt="icon" onClick={() => updateClicks()} data-identifier={iconIdentifier}/>
             ) : (
                 ""
             )}
         </QuestionButtion>
     );
 }
+
+
 
 export default Main;
 

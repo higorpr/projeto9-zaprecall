@@ -6,7 +6,7 @@ export default function FrontPage({ setBegan }) {
         <BeginPage>
             <img src={logo} alt="" />
             <p>ZapRecall</p>
-            <button onClick={() => setBegan(true)}>
+            <button onClick={() => setBegan(true)} data-identifier="start-btn">
                 Iniciar Recall!
             </button>
         </BeginPage>

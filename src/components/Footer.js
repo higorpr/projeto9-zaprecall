@@ -17,6 +17,7 @@ function Footer({ nClicks, setNClicks, grades, setGrades, current }) {
                     grades={grades}
                     setGrades={setGrades}
                     current={current}
+                    
                 >
                     <p>Não lembrei</p>
                 </Button>
@@ -27,6 +28,7 @@ function Footer({ nClicks, setNClicks, grades, setGrades, current }) {
                     grades={grades}
                     setGrades={setGrades}
                     current={current}
+                    
                 >
                     <p>Quase não lembrei</p>
                 </Button>
@@ -41,7 +43,9 @@ function Footer({ nClicks, setNClicks, grades, setGrades, current }) {
                     <p>Zap!</p>
                 </Button>
             </ButtonContainer>
+            <p data-identifier="flashcard-counter">
             {concluded}/{grades.length} Concluídos
+            </p>
         </FooterContainer>
     );
 }
@@ -50,6 +54,14 @@ function Button(props) {
     
     const { order, nClicks, setNClicks, grades, setGrades, current } = props;
     
+    let footerIdentifier;
+    if (order === 1) {
+        footerIdentifier="forgot-btn"
+    } else if (order === 2) {
+        footerIdentifier="almost-forgot-btn"
+    } else {
+        footerIdentifier="zap-btn"
+    }
 
     function defineGrade(grade) {
         if (nClicks[current] === 1  || nClicks[current] === 2) {
@@ -73,7 +85,7 @@ function Button(props) {
         color = "#2FBE34";
     }
     return (
-        <FooterButton color={color}>
+        <FooterButton color={color} data-identifier={footerIdentifier}>
             <div onClick={() => defineGrade(order)}>{props.children}</div>
         </FooterButton>
     );
