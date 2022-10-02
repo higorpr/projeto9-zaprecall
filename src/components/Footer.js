@@ -1,10 +1,61 @@
 import styled from "styled-components";
 
+function Footer({ nClicks, setNClicks, grades, setGrades, current }) {
+    return (
+        <FooterContainer>
+            <ButtonContainer>
+                <Button
+                    order={1}
+                    nClicks={nClicks}
+                    setNClicks={setNClicks}
+                    grades={grades}
+                    setGrades={setGrades}
+                    current={current}
+                >
+                    <p>Não lembrei</p>
+                </Button>
+                <Button
+                    order={2}
+                    nClicks={nClicks}
+                    setNClicks={setNClicks}
+                    grades={grades}
+                    setGrades={setGrades}
+                    current={current}
+                >
+                    <p>Quase não lembrei</p>
+                </Button>
+                <Button
+                    order={3}
+                    nClicks={nClicks}
+                    setNClicks={setNClicks}
+                    grades={grades}
+                    setGrades={setGrades}
+                    current={current}
+                >
+                    <p>Zap!</p>
+                </Button>
+            </ButtonContainer>
+        </FooterContainer>
+    );
+}
+
 function Button(props) {
-    console.log(props.children);
-    const {
-        order
-    } = props
+    
+    const { order, nClicks, setNClicks, grades, setGrades, current } = props;
+    
+
+    function defineGrade(grade) {
+        console.log({ grade, nClicks });
+        if (nClicks[current] === 1) {
+            let arrClick = [...nClicks];
+            arrClick[current] = 0;
+            setNClicks(arrClick);
+            let arrGrades = [...grades];
+            arrGrades[current] = grade;
+            setGrades(arrGrades);
+            console.log({arrGrades})
+        }
+    }
 
     let color;
 
@@ -13,28 +64,12 @@ function Button(props) {
     } else if (order === 2) {
         color = "#FF922E";
     } else {
-        color = "#2FBE34"
+        color = "#2FBE34";
     }
-    return <FooterButton color={color}>{props.children}</FooterButton>;
-}
-
-function Footer({ nClicks, setNClicks }) {
     return (
-        <FooterContainer>
-            <ButtonContainer>
-                <Button order={1} >
-                    <p>Não lembrei</p>
-                </Button>
-                <Button order={2}>
-                    <p>Quase não lembrei</p>
-                </Button>
-                <Button order={3}>
-                    <p>
-                        Zap!
-                    </p>
-                </Button>
-            </ButtonContainer>
-        </FooterContainer>
+        <FooterButton color={color}>
+            <div onClick={() => defineGrade(order)}>{props.children}</div>
+        </FooterButton>
     );
 }
 
@@ -78,7 +113,7 @@ const FooterButton = styled.button`
     justify-content: center;
     text-align: center;
     color: #ffffff;
-    background: ${props => props.color};
+    background: ${(props) => props.color};
     border-radius: 5px;
     border: none;
     padding: 5px;

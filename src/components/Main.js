@@ -3,7 +3,7 @@ import styled from "styled-components";
 import arrow from "../assets/img/seta_play.png";
 import circularArrow from "../assets/img/seta_virar.png";
 
-function Main({ entries, nClicks, setNClicks }) {
+function Main({ entries, nClicks, setNClicks, current, setCurrent, grades }) {
     return (
         <>
             {entries.map((entry, idx) => (
@@ -13,13 +13,24 @@ function Main({ entries, nClicks, setNClicks }) {
                     idx={idx}
                     nClicks={nClicks}
                     setNClicks={setNClicks}
+                    current={current}
+                    setCurrent={setCurrent}
+                    grades={grades}
                 />
             ))}
         </>
     );
 }
 
-function Button({ entry, idx, nClicks, setNClicks }) {
+function Button({
+    entry,
+    idx,
+    nClicks,
+    setNClicks,
+    current,
+    setCurrent,
+    grades,
+}) {
     let height;
     let color;
     let fontWeight;
@@ -30,6 +41,9 @@ function Button({ entry, idx, nClicks, setNClicks }) {
     let textAlign;
     let icon;
     let text;
+    let border;
+    let textDecoration;
+    let textColor;
 
     if (nClicks[idx] === 0) {
         height = "65px";
@@ -60,10 +74,33 @@ function Button({ entry, idx, nClicks, setNClicks }) {
         }
     }
 
-    function updateClicks(index) {
+    if (grades[idx] !== 0) {
+        if (grades[idx] === 3) {
+            textColor = "#2FBE34";
+            textDecoration = "line-through";
+        } else if (grades[idx] === 2) {
+            textColor = "#ff922e";
+            textDecoration = "line-through";
+        } else {
+            textColor = "#ff3030";
+            textDecoration = "line-through";
+        }
+    } else {
+        textDecoration = "";
+        textColor = "#333333";
+    }
+
+    if (idx === current) {
+        border = "2px solid blue";
+    } else {
+        border = "none";
+    }
+
+    function updateClicks() {
         const arr = [...nClicks];
-        arr[index] = arr[index] + 1;
+        arr[idx] += 1;
         setNClicks(arr);
+        setCurrent(idx);
     }
 
     return (
@@ -76,10 +113,14 @@ function Button({ entry, idx, nClicks, setNClicks }) {
             positionButton={positionButton}
             positionImage={positionImage}
             textAlign={textAlign}
+            border={border}
+            textDecoration={textDecoration}
+            textColor={textColor}
+            onClick={() => setCurrent(idx)}
         >
             <p>{text}</p>
             {icon ? (
-                <img src={icon} alt="icon" onClick={() => updateClicks(idx)} />
+                <img src={icon} alt="icon" onClick={() => updateClicks()} />
             ) : (
                 ""
             )}
@@ -101,15 +142,16 @@ const QuestionButtion = styled.button`
     align-items: ${(props) => props.textAlign};
     justify-content: space-between;
     position: ${(props) => props.positionButton};
-
+    border: ${(props) => props.border};
     p {
         font-family: "Recursive";
         font-style: normal;
         font-weight: ${(props) => props.fontWeight};
         font-size: ${(props) => props.fontSize};
         line-height: ${(props) => props.lineHeight};
-        color: #333333;
+        color: ${(props) => props.textColor};
         text-align: left;
+        text-decoration: ${(props) => props.textDecoration};
     }
 
     img {

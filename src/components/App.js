@@ -10,6 +10,8 @@ import { useState } from "react";
 function App() {
     const [began, setBegan] = useState(false);
     const [nClicks, setNClicks] = useState(new Array(deckReact.length).fill(0));
+    const [grades, setGrades] = useState(new Array(deckReact.length).fill(0));
+    const [current, setCurrent] = useState(-1);
 
     return (
         <>
@@ -22,6 +24,10 @@ function App() {
                         entries={deckReact}
                         nClicks={nClicks}
                         setNClicks={setNClicks}
+                        grades={grades}
+                        setGrades={setGrades}
+                        current={current}
+                        setCurrent={setCurrent}
                     />
                 )}
             </ScreenContainer>
@@ -29,12 +35,35 @@ function App() {
     );
 }
 
-function MainApp({ entries, nClicks, setNClicks }) {
+function MainApp({
+    entries,
+    nClicks,
+    setNClicks,
+    grades,
+    setGrades,
+    current,
+    setCurrent,
+}) {
     return (
         <>
             <Header />
-            <Main entries={entries} nClicks={nClicks} setNClicks={setNClicks} />
-            <Footer nClicks={nClicks} setNClicks={setNClicks} />
+
+            <Main
+                entries={entries}
+                nClicks={nClicks}
+                setNClicks={setNClicks}
+                current={current}
+                setCurrent={setCurrent}
+                grades={grades}
+            />
+
+            <Footer
+                nClicks={nClicks}
+                setNClicks={setNClicks}
+                grades={grades}
+                setGrades={setGrades}
+                current={current}
+            />
         </>
     );
 }
